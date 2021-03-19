@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangyu.mapper.ConsumerMapper">
+    <insert id="save" parameterType="com.yangyu.po.Consumer" useGeneratedKeys="true" keyColumn="id">
+        insert into t_consumer(avatar,email,nickname,password,consumername)
+        values(#{avatar},#{email},#{nickname},#{password},#{consumername});
+    </insert>
+    <select id="checkConsumer"  resultType="Consumer">
+        select *  from t_consumer where consumername=#{u} and password=#{p};
+    </select>
+
+    <select id="findByName" parameterType="String" resultType="Consumer">
+        select * from  t_consumer where consumername=#{name};
+    </select>
+
+
+</mapper>

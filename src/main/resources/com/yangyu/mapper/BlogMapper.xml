@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangyu.mapper.BlogMapper">
+
+<!--  adminUser********************************************************-->
+
+    <select id="findBlog"   resultType="Blog">
+        select * from t_blog order by views DESC limit #{n1},#{n} ;
+    </select>
+    <insert id="save" parameterType="com.yangyu.po.Blog"  useGeneratedKeys="true" keyColumn="id">
+        insert into t_blog (appreciation,commentabled,content,create_time,description,first_picture,flag,published,recommend,share_statement,title,update_time,type_id,user_id)
+        values (#{appreciation},#{commentabled},#{content},#{createTime},#{description},#{firstPicture},#{flag},#{published},#{recommend},#{shareStatement},#{title},#{updateTime},views=#{views},#{type.id},#{user.id});
+    </insert>
+    <delete id="delete" parameterType="Long" >
+        delete from t_blog where id=#{id};
+    </delete>
+    <select id="getById" parameterType="Long" resultType="Blog">
+        select * from  t_blog where id=#{id};
+    </select>
+    <update id="update" >
+        update t_blog set appreciation=#{appreciation},commentabled=#{commentabled},content=#{content},
+                          description=#{description},first_picture=#{firstPicture},flag=#{flag},
+                          published=#{published},recommend=#{recommend},share_statement=#{shareStatement},title=#{title},
+                          update_time=#{updateTime},type_id=#{type.id},user_id=#{user.id} where id=#{id};
+    </update>
+
+<!--    index *****************************************************************-->
+
+    <select id="findBlogByType" parameterType="Long" resultType="Blog">
+        select * from t_blog as blog where type_id = #{id};
+    </select>
+    <select id="findBlogByTag" parameterType="Long" resultType="Blog">
+        select blog.* from t_blog blog,t_blog_tags where tags_id=#{id} and blogs_id = blog.id;
+    </select>
+
+    <select id="count"  resultType="Integer">
+        select count(*) from t_blog;
+    </select>
+    <select id="findHotBlog" resultType="Blog">
+        select * from t_blog order by views DESC limit 0,6;
+    </select>
+    <select id="findByKeywords" parameterType="String" resultType="Blog">
+        select * from t_blog where title=#{key} or content=#{key} or description=#{key};
+    </select>
+
+
+
+
+</mapper>

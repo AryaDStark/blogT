@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangyu.mapper.TypeMapper">
+<!--    分页查询-->
+    <select id="findAllTypes" resultType="Type">
+        select * from t_type limit #{page},3;
+    </select>
+<!--     按blog数量排序-->
+    <select id="findTopTypes" resultType="Type">
+        SELECT type.*,blog.type_id FROM t_type TYPE JOIN t_blog blog ON blog.type_id=type.id GROUP BY type_id ORDER BY COUNT(*) DESC;
+    </select>
+<!--    保存-->
+    <insert id="saveType"  parameterType="String"  useGeneratedKeys="true" keyColumn="id" >
+        insert into t_type(name) values (#{name});
+    </insert>
+<!--    根据id查询-->
+    <select id="getById" parameterType="Long" resultType="Type">
+        select * from t_type WHERE id=#{id};
+    </select>
+<!--    根据name查询-->
+    <select id="getByName" parameterType="String" resultType="Type">
+        select * from  t_type WHERE name=#{name};
+    </select>
+<!--    删除-->
+    <delete id="deleteType" parameterType="Long" >
+        delete from t_type where id=#{id};
+    </delete>
+    <update id="updateType" >
+        update t_type set name=#{name} where id=#{id};
+    </update>
+
+</mapper>

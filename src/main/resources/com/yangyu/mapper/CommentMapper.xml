@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangyu.mapper.CommentMapper">
+    <select id="findByBlogId" parameterType="Long" resultType="Comment">
+        select * from t_comment where blog_id=#{id};
+    </select>
+
+    <insert id="save" parameterType="com.yangyu.po.Consumer" useGeneratedKeys="true" keyColumn="id">
+        insert into t_comment(admin_comment,avatar,content,email,nickname,blog_id)
+        values(#{adminComment},#{avatar},#{content},#{email},#{nickname},#{blog});
+    </insert>
+
+
+
+
+</mapper>
